@@ -1,0 +1,22 @@
+{
+  "files.exclude": {
+    ".git": true,
+    "package-lock.json": true,
+    ".theia": true,
+    ".gitpod.yml": true,
+    "favicon.ico": true,
+    ".eslintrc.js": true,
+    "node_modules": true,
+    ".gitignore": true,
+    "tsconfig.json": true,
+    ".travis.yml": true,
+    "out": true,
+    "package.json": true,
+    ".vscode": true,
+    "tslint.json": true,
+    "src\\global.d.ts": true
+  },
+  "liveServer.settings.port": 3000,
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true
+}
