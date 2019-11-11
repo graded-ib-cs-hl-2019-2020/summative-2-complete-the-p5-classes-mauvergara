@@ -37,7 +37,7 @@ function setup() {
     let numFlakes = 10;
     createCanvas(1000, 500);
     for (let i = 0; i < numBalls; i++) {
-        balls.push(new Ball(random(width - 25), random(height), random(10, 50)));
+        balls.push(new Ball(random(width - 25), random(height), random(20, 50), randomColor(), randomColor()));
         /* TODO OPTIONAL - make the balls a random color */
     }
     for (let j = 0; j < numBubbles; j++) {
@@ -48,12 +48,19 @@ function setup() {
     }
 }
 
+function randomColor() {
+    // creates pseudo-random rgb color
+    // tslint:disable-next-line: max-line-length
+    return ("rgb(" + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + ")");
+}
+
 function draw() {
     background("skyblue");
     for (let i = 0; i < balls.length; i++) {
         balls[i].draw();
-        if (!balls[i].touchingMouse()) {
+        if (!balls[i].touchingMouse() && !mouseIsPressed) {
             balls[i].move();
+            collision();
         }
     }
     for (let i = 0; i < bubbles.length; i++) {
@@ -63,6 +70,20 @@ function draw() {
     for (let i = 0; i < snowflakes.length; i++) {
         snowflakes[i].draw();
         snowflakes[i].move();
+    }
+}
+function collision() {
+    for (let i = 0; i < balls.length; i++) {
+        for (let j = i + 1; j < balls.length; j++) {
+            // determines if distance between two balls is less than the radius of those two balls
+            if (
+                (dist(balls[i].getx(), balls[i].gety(), balls[j].getx(), balls[j].gety())) <
+                (balls[i].getSize() / 2 + balls[j].getSize() / 2)) {
+
+                balls[i].bounce();
+                balls[j].bounce();
+            }
+        }
     }
 }
 

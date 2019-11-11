@@ -3,13 +3,13 @@ export class Ball {
   private x: number;
   private y: number;
   private size: number;
+  private color: string;
+  private borderColor: string;
   private xSpeed: number;
   private ySpeed: number;
   private stopped: boolean = false;
-  private color: string;
-  private borderColor: string;
 
-  constructor(x: number, y: number, size: number, color: string = "red", borderColor: string = "black") {
+  constructor(x: number, y: number, size: number, color: string, borderColor: string) {
     this.x = x;
     this.y = y;
     this.size = size;
@@ -18,6 +18,18 @@ export class Ball {
     this.color = color;
     this.borderColor = borderColor;
 
+  }
+
+  public getx() {
+    return (this.x);
+  }
+
+  public gety() {
+    return (this.y);
+  }
+
+  public getSize() {
+    return (this.size);
   }
 
   public stop() {
@@ -48,6 +60,19 @@ export class Ball {
 
   public touchingMouse(): boolean {
     return this.distFromMouse() < this.size / 2;
+  }
+
+  public bounce() {
+    this.xSpeed = -this.xSpeed;
+    this.ySpeed = -this.ySpeed;
+    this.x += this.xSpeed / 1.5;
+    this.y += this.ySpeed / 1.5;
+  }
+
+  public randomColor() {
+    // creates pseudo-random rgb color
+    // tslint:disable-next-line: max-line-length
+    return ("rgb(" + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + ")");
   }
 
   /* This border behavior implements a bounce */
