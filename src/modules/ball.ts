@@ -20,17 +20,21 @@ export class Ball {
 
   }
 
-  public getx() {
-    return (this.x);
-  }
+  public getx() { return (this.x); }
+  public gety() { return (this.y); }
+  public getSize() { return (this.size); }
+  public getxSpeed() { return (this.xSpeed); }
+  public getySpeed() { return (this.ySpeed); }
+  public getColor() { return (this.color); }
+  public getBorderColor() { return (this.borderColor); }
 
-  public gety() {
-    return (this.y);
-  }
-
-  public getSize() {
-    return (this.size);
-  }
+  public setx(newx: number) { this.x = newx; }
+  public sety(newy: number) { this.y = newy; }
+  public setSize(newSize: number) { this.size = newSize; }
+  public setxSpeed(newxSpeed: number) { this.xSpeed = newxSpeed; }
+  public setySpeed(newySpeed: number) { this.ySpeed = newySpeed; }
+  public setColor(newColor: string) { this.color = newColor; }
+  public setBorderColor(newBorderColor: string) { this.borderColor = newBorderColor; }
 
   public stop() {
     this.stopped = true;
