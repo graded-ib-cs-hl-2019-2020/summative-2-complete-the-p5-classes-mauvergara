@@ -79,9 +79,10 @@ function collision() {
             if (
                 (dist(balls[i].getx(), balls[i].gety(), balls[j].getx(), balls[j].gety())) <
                 (balls[i].getSize() / 2 + balls[j].getSize() / 2)) {
-
                 balls[i].bounce();
                 balls[j].bounce();
+                balls[i].setColor(randomColor());
+                balls[j].setColor(randomColor());
             }
         }
     }
