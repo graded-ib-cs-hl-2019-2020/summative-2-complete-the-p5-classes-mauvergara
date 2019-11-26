@@ -66,13 +66,6 @@ export class Ball {
     return this.distFromMouse() < this.size / 2;
   }
 
-  public bounce() {
-    this.xSpeed = -this.xSpeed;
-    this.ySpeed = -this.ySpeed;
-    this.x += this.xSpeed / 1.5;
-    this.y += this.ySpeed / 1.5;
-  }
-
   public randomColor() {
     // creates pseudo-random rgb color
     // tslint:disable-next-line: max-line-length

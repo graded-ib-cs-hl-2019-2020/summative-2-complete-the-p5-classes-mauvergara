@@ -37,7 +37,7 @@ function setup() {
     let numFlakes = 10;
     createCanvas(1000, 500);
     for (let i = 0; i < numBalls; i++) {
-        balls.push(new Ball(random(width - 25), random(height), random(20, 50), randomColor(), randomColor()));
+        balls.push(new Ball(random(width - 25), random(height), random(10, 60), randomColor(), randomColor()));
         /* TODO OPTIONAL - make the balls a random color */
     }
     for (let j = 0; j < numBubbles; j++) {
@@ -60,7 +60,6 @@ function draw() {
         balls[i].draw();
         if (!balls[i].touchingMouse() && !mouseIsPressed) {
             balls[i].move();
-            collision();
         }
     }
     for (let i = 0; i < bubbles.length; i++) {
@@ -71,18 +70,51 @@ function draw() {
         snowflakes[i].draw();
         snowflakes[i].move();
     }
+    collision();
 }
 function collision() {
+    let ux1: number = 0;
+    let uy1: number = 0;
+    let ux2: number = 0;
+    let uy2: number = 0;
     for (let i = 0; i < balls.length; i++) {
         for (let j = i + 1; j < balls.length; j++) {
             // determines if distance between two balls is less than the radius of those two balls
             if (
-                (dist(balls[i].getx(), balls[i].gety(), balls[j].getx(), balls[j].gety())) <
+                (dist(balls[i].getx(), balls[i].gety(), balls[j].getx(), balls[j].gety())) <=
                 (balls[i].getSize() / 2 + balls[j].getSize() / 2)) {
-                balls[i].bounce();
-                balls[j].bounce();
-                balls[i].setColor(randomColor());
-                balls[j].setColor(randomColor());
+                // convenience variables
+                let b1 = balls[i];
+                let b2 = balls[j];
+                let m1 = b1.getSize() * b1.getSize();
+                let m2 = b2.getSize() * b2.getSize();
+                let r1 = b1.getSize() / 2;
+                let r2 = b2.getSize() / 2;
+                ux1 = balls[i].getxSpeed();
+                uy1 = balls[i].getySpeed();
+                ux2 = balls[j].getxSpeed();
+                uy2 = balls[j].getySpeed();
+                let dNow = (dist(b1.getx(), b1.gety(), b2.getx(), b2.gety()));
+                let dThen = ((dist(b1.getx() - b1.getxSpeed(), b1.gety() - b1.getySpeed(),
+                    b2.getx() - b2.getxSpeed(), b2.gety() - b2.getySpeed())));
+                let dChange = dThen - dNow;
+                let dOverlapping = r1 + r2 - dNow;
+                // set balls back so they are perfectly touching
+                b1.setx(b1.getx() - b1.getxSpeed() * dOverlapping / dChange);
+                b1.sety(b1.gety() - b1.getySpeed() * dOverlapping / dChange);
+                b2.setx(b2.getx() - b2.getxSpeed() * dOverlapping / dChange);
+                b2.sety(b2.gety() - b2.getySpeed() * dOverlapping / dChange);
+                // ellastic collision equations
+                b1.setxSpeed(((m1 - m2) * ux1 / (m1 + m2)
+                    + ((2 * m2 * ux2)) / (m1 + m2)));
+                b1.setySpeed(((m1 - m2) * uy1 / (m1 + m2)
+                    + ((2 * m2 * uy2)) / (m1 + m2)));
+                b2.setxSpeed(((m2 - m1) * ux2 / (m2 + m1)
+                    + ((2 * m1 * ux1)) / (m2 + m1)));
+                b2.setySpeed(((m2 - m1) * uy2 / (m1 + m2)
+                    + ((2 * m1 * uy1)) / (m2 + m1)));
+                // balls[j].setColor(randomColor());
+                // balls[i].setColor(randomColor());
             }
         }
     }
