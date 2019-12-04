@@ -3,17 +3,38 @@ export class Ball {
   private x: number;
   private y: number;
   private size: number;
-  private xSpeed: number = random(-3, 3);
-  private ySpeed: number = random(-3, 3);
+  private color: string;
+  private borderColor: string;
+  private xSpeed: number;
+  private ySpeed: number;
   private stopped: boolean = false;
-  private color: string = "red";
-  private borderColor: string = "black";
 
-  /* TODO REQUIRED - add accessors and mutators for x, y, size, color, and borderColor */
-  constructor(x: number, y: number, size: number) {
-    /* TODO REQUIRED = Build your constructor */
-    /* TODO OPTIONAL - add optional parameters to set color and borderColor on creation of the object */
+  constructor(x: number, y: number, size: number, color: string, borderColor: string) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.xSpeed = random(-3, 3);
+    this.ySpeed = random(-3, 3);
+    this.color = color;
+    this.borderColor = borderColor;
+
   }
+
+  public getx() { return (this.x); }
+  public gety() { return (this.y); }
+  public getSize() { return (this.size); }
+  public getxSpeed() { return (this.xSpeed); }
+  public getySpeed() { return (this.ySpeed); }
+  public getColor() { return (this.color); }
+  public getBorderColor() { return (this.borderColor); }
+
+  public setx(newx: number) { this.x = newx; }
+  public sety(newy: number) { this.y = newy; }
+  public setSize(newSize: number) { this.size = newSize; }
+  public setxSpeed(newxSpeed: number) { this.xSpeed = newxSpeed; }
+  public setySpeed(newySpeed: number) { this.ySpeed = newySpeed; }
+  public setColor(newColor: string) { this.color = newColor; }
+  public setBorderColor(newBorderColor: string) { this.borderColor = newBorderColor; }
 
   public stop() {
     this.stopped = true;
@@ -43,6 +64,12 @@ export class Ball {
 
   public touchingMouse(): boolean {
     return this.distFromMouse() < this.size / 2;
+  }
+
+  public randomColor() {
+    // creates pseudo-random rgb color
+    // tslint:disable-next-line: max-line-length
+    return ("rgb(" + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + "," + Math.floor(random(0, 255)) + ")");
   }
 
   /* This border behavior implements a bounce */
